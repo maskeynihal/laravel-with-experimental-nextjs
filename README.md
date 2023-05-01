@@ -36,6 +36,12 @@
    ./vendor/bin/sail up
    ```
 
+6. Run migration and seeder file
+
+   ```bash
+   ./vendor/bin/sail artisan migrate:fresh --seed
+   ```
+
 ## Frontend
 
 - [Next.js](https://beta.nextjs.org/docs) with experimental app folder
