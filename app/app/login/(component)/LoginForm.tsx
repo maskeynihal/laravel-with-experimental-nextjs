@@ -1,15 +1,18 @@
 "use client";
 
-import Axios from "axios";
+import { baseUrl } from "@/config/backend";
+import endpoints from "@/config/endpoints";
+import { useRouter } from "next/navigation";
+import { createRoute } from "@/services/route";
 import { ChangeEvent, FormEvent, useState } from "react";
-
-const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function LoginForm() {
   const [input, setInput] = useState({
     email: "admin@admin.com",
     password: "password",
   });
+
+  const router = useRouter();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -19,7 +22,7 @@ export default function LoginForm() {
     headers.append("Content-Type", "application/json");
     headers.append("X-Requested-With", "XMLHttpRequest");
 
-    await fetch(`${baseUrl}/sanctum/csrf-cookie`, {
+    await fetch(createRoute(baseUrl, endpoints.sanctum.csrf), {
       credentials: "include",
     });
 
@@ -29,7 +32,7 @@ export default function LoginForm() {
       headers.append("X-XSRF-TOKEN", xsrfToken[1]);
     }
 
-    const response = await fetch(`${baseUrl}/login`, {
+    const response = await fetch(createRoute(baseUrl, endpoints.auth.login), {
       method: "POST",
       body: JSON.stringify(input),
       headers: headers,
@@ -43,6 +46,7 @@ export default function LoginForm() {
     }
 
     alert("Login Success");
+    router.replace("/dashboard");
   };
 
   return (
