@@ -46,6 +46,8 @@
 
 - [Next.js](https://beta.nextjs.org/docs) with experimental app folder
 
+### Installation
+
 1. Change directory to `app`
 
    ```bash
